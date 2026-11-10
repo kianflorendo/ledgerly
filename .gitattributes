@@ -1,0 +1,9 @@
+# Preserve binary assets byte for byte on Windows.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.gif binary
+*.mp4 binary
+*.wav binary
+*.pptx binary
+*.woff2 binary

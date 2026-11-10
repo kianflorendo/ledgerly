@@ -1,0 +1,19 @@
+Can your agent handle failure? Meet Ledgerly. See every decision, every tool call, and every result.
+
+Agent behavior includes tool calls, multi-step decisions, and failures. A fair comparison needs the same task, clear scoring, and repeat runs.
+
+Ledgerly compares a bounded tool agent, a direct single-pass baseline, and a Lang Graph adapter. Each receives identical synthetic case facts, scoped evidence, rules, citations, and output format.
+
+The core suite tests authorized evidence, missing acceptance, wrong approvers, misleading source instructions, a failing tool, and an unavailable model.
+
+This corrected three-repeat run uses Qwen three, one point seven billion through local Ollama. Across the four common evidence cases, the tool agent passed six of twelve attempts. Direct single-pass and Lang Graph each passed zero of twelve.
+
+The tool agent recovered from the injected tool failure in all three repeats. Every strategy surfaced the model outage each time. But the tool agent failed the wrong-approver and misleading-instruction cases on every repeat. It has not met our task-accuracy target.
+
+Now let's inspect Ledgerly in the browser. This is the saved three-repeat result; we are not starting another benchmark. The cards show each agent's metrics. Expand per-task outcomes, then open an execution trace to inspect its steps, calls, evidence checks, and timing. Finally, switch to the invoice-resolution desk to see a synthetic case and the source-evidence review flow.
+
+The system captures task outcomes, execution steps, tool calls, prompt and output tokens, completion time, estimated API fees, and detailed traces. Paid API costs are zero; hardware and electricity are excluded.
+
+These are synthetic tasks on one local model. We have not established production reliability, customer outcomes, recovered cash, or broad framework support.
+
+Ledgerly makes agent behavior visible, repeatable, and comparable. Next: improve evidence reasoning and add another independent adapter.

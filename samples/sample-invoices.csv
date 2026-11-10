@@ -1,0 +1,2 @@
+invoiceNumber,customer,project,milestone,amount,currency,recipient,authorizedApprover,objection
+INV-100,Example Agency,Portal,M1,1500.00,USD,ap@client.example,approver@client.example,Acceptance requested

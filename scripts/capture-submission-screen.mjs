@@ -1,0 +1,10 @@
+﻿import { chromium } from 'playwright';
+const browser = await chromium.launch({headless:true});
+const page = await browser.newPage({viewport:{width:1600,height:900}, deviceScaleFactor:1});
+page.on('pageerror', e => console.error('PAGE_ERROR', e.message));
+await page.goto('http://127.0.0.1:3000', {waitUntil:'networkidle', timeout:20000});
+await page.waitForTimeout(1200);
+console.log('title:', await page.title());
+console.log('benchmark visible:', await page.getByText(/Agent benchmark/i).first().isVisible().catch(()=>false));
+await page.screenshot({path:'submission/assets/benchmark-workspace.png', fullPage:false});
+await browser.close();

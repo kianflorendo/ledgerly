@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face{font-family:Inter;src:url('assets/inter-latin-400.woff2') format('woff2');font-weight:400;font-display:block}
+      @font-face{font-family:Inter;src:url('assets/inter-latin-500.woff2') format('woff2');font-weight:500;font-display:block}
+      @font-face{font-family:Inter;src:url('assets/inter-latin-600.woff2') format('woff2');font-weight:600;font-display:block}
+      @font-face{font-family:Inter;src:url('assets/inter-latin-700.woff2') format('woff2');font-weight:700;font-display:block}
+      @font-face{font-family:Inter;src:url('assets/inter-latin-800.woff2') format('woff2');font-weight:800;font-display:block}
+      :root{--bg:#1E243B;--panel:#272F4D;--panel2:#303A5C;--blue:#418AF2;--indigo:#6D6FFF;--teal:#19CEB3;--rose:#D62B70;--white:#F4F6FC;--muted:#AFBAD8;--line:#3B466A;--amber:#FFC46B;--font: Inter, Arial, sans-serif}
+      *{box-sizing:border-box}html,body{width:1920px;height:1080px;margin:0;overflow:hidden;background:var(--bg);font-family:var(--font);color:var(--white)}
+      body{position:relative}#root{position:relative;width:100%;height:100%;overflow:hidden;background:var(--bg)}
+      #root:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(75,94,141,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(75,94,141,.13) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,transparent,#000 45%,#000)}
+      .scene{position:absolute;inset:0;padding:74px 118px 78px;display:flex;flex-direction:column;opacity:0;transform:translateY(18px);background:var(--bg);overflow:hidden}
+      .scene:after{content:"";position:absolute;z-index:0;right:-230px;top:-350px;width:850px;height:850px;border-radius:50%;background:radial-gradient(circle,rgba(65,138,242,.10),transparent 70%);pointer-events:none}
+      .scene-content{position:relative;z-index:1;display:flex;flex-direction:column;width:100%;height:100%;gap:28px;justify-content:center}
+      .eyebrow{font-size:20px;letter-spacing:.19em;text-transform:uppercase;color:var(--teal);font-weight:700}
+      h1{font-size:76px;line-height:1.08;letter-spacing:-.045em;margin:0;font-weight:760;max-width:1400px}
+      h2{font-size:56px;line-height:1.12;letter-spacing:-.035em;margin:0;font-weight:740;max-width:1480px}
+      .sub{font-size:29px;line-height:1.4;color:var(--muted);max-width:1320px;margin:0}
+      .small{font-size:20px;line-height:1.4;color:var(--muted)}
+      .foot{position:absolute;left:118px;right:118px;bottom:30px;display:flex;justify-content:space-between;color:#8694B8;font-size:17px;letter-spacing:.04em;z-index:2}
+      .rule{height:3px;width:100%;background:var(--line);transform-origin:left;border-radius:2px;overflow:hidden}.rule i{display:block;height:100%;width:0;background:var(--blue)}
+      .pill{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);background:rgba(39,47,77,.86);border-radius:100px;padding:14px 24px;font-size:20px;color:var(--muted);width:max-content}
+      .ambient-sweep{position:absolute;z-index:20;top:36px;left:-210px;width:210px;height:2px;background:linear-gradient(90deg,transparent,var(--blue),rgba(25,206,179,.8),transparent);opacity:.65;filter:drop-shadow(0 0 6px rgba(65,138,242,.45));pointer-events:none}
+      .dot{width:11px;height:11px;background:var(--teal);border-radius:50%;box-shadow:0 0 18px rgba(25,206,179,.7)}
+      .hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px}.hero-copy{display:flex;flex-direction:column;gap:28px}.brand{font-size:22px;letter-spacing:.2em;font-weight:800;color:var(--white)}.brand b{color:var(--blue)}
+      .mascot-wrap{height:570px;display:flex;align-items:center;justify-content:center;position:relative}.mascot{width:370px;height:370px;border-radius:50%;background:linear-gradient(140deg,#fff,#DCE9FF);box-shadow:inset -20px -28px 0 rgba(45,87,145,.12),0 24px 80px rgba(15,22,45,.4);position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:70px}.eye{width:34px;height:73px;border-radius:22px;background:#1E243B}.orbit{position:absolute;border:7px solid rgba(65,138,242,.85);border-left-color:transparent;border-right-color:transparent;border-radius:50%;width:620px;height:190px;transform:rotate(-21deg)}.orbit.two{width:600px;height:180px;border-color:rgba(109,111,255,.8);border-top-color:transparent;transform:rotate(34deg)}.star{position:absolute;width:18px;height:18px;border-radius:50%;background:#B9DAFF;box-shadow:0 0 25px #418AF2;top:116px;right:100px}
+      .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:16px}.problem{min-height:245px;border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:30px}.problem .num{font-size:19px;color:var(--blue);font-weight:800;letter-spacing:.12em}.problem h3{font-size:32px;margin:25px 0 15px}.problem p{font-size:24px;line-height:1.35;color:var(--muted);margin:0}
+      .pipeline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:34px 0 4px;position:relative}.node{width:254px;height:150px;border:2px solid var(--line);border-radius:22px;background:var(--panel);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;text-align:center}.node strong{font-size:24px}.node span{font-size:18px;color:var(--muted)}.node.primary{border-color:var(--blue)}.connector{height:4px;flex:1;background:var(--line);position:relative;overflow:hidden}.connector i{position:absolute;top:-8px;left:0;width:20px;height:20px;background:var(--teal);border-radius:50%;box-shadow:0 0 22px var(--teal)}
+      .scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 32px;margin-top:14px}.scenario{height:112px;border:1px solid var(--line);border-radius:18px;background:var(--panel);display:flex;align-items:center;gap:22px;padding:22px 26px}.check{width:46px;height:46px;border-radius:50%;background:rgba(65,138,242,.18);display:grid;place-items:center;flex:none}.check:before{content:"";width:14px;height:8px;border-left:3px solid var(--blue);border-bottom:3px solid var(--blue);transform:translateY(-2px) rotate(-45deg)}.scenario strong{font-size:25px;display:block}.scenario span{font-size:19px;color:var(--muted);display:block;margin-top:6px}
+      .results{display:grid;grid-template-columns:1.15fr .85fr;gap:54px;align-items:center;margin-top:18px}.bars{display:flex;flex-direction:column;gap:38px}.barrow{display:grid;grid-template-columns:270px 1fr 90px;gap:18px;align-items:center;font-size:23px}.bartrack{height:42px;border-radius:24px;background:var(--panel2);overflow:hidden}.barfill{height:100%;width:0;border-radius:24px;background:var(--blue);transform-origin:left}.barfill.dim{background:#6A7599}.pct{font-size:31px;font-weight:800;text-align:right}.stat-panel{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:34px 40px}.bigstat{font-size:70px;line-height:1;font-weight:800;color:var(--blue)}.statlabel{font-size:24px;color:var(--muted);margin:10px 0 22px}.stat-divider{height:1px;background:var(--line);margin:20px 0}.caveat{font-size:20px;color:var(--amber);line-height:1.45;font-weight:650;margin-top:30px}
+      .resilience{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:12px}.resultbox{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:30px}.resultbox h3{font-size:29px;margin:0 0 18px}.score{font-size:56px;font-weight:800;color:var(--teal)}.score.bad{color:var(--rose)}.resultbox p{font-size:23px;line-height:1.4;color:var(--muted);margin:12px 0 0}.tag{font-size:17px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:800;margin-top:18px}.tag.bad{color:#FF9EC0}
+      .metrics-layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:40px;align-items:center}.metric-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}.metric{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}.metric strong{font-size:21px;color:var(--blue);display:block;margin-bottom:8px}.metric span{font-size:19px;color:var(--muted)}.screenframe{background:#11182C;border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:0 28px 70px rgba(0,0,0,.28)}.screenframe img{display:block;width:100%;height:410px;object-fit:cover;object-position:center top;border-radius:11px}
+      .limits{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:14px}.limit{padding:28px 32px;border-radius:22px;background:var(--panel);border:1px solid var(--line)}.limit h3{font-size:30px;margin:0 0 22px}.limit ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:16px}.limit li{font-size:23px;color:var(--muted);line-height:1.3;padding-left:26px;position:relative}.limit li:before{content:"";position:absolute;left:0;top:9px;width:10px;height:10px;border-radius:50%;background:var(--teal)}.limit.gap li:before{background:var(--rose)}
+      .scene.live{padding:0;background:#11182C}.live-site-demo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#11182C}
+      .close{align-items:center;text-align:center}.close h2{font-size:72px;max-width:1300px}.close .sub{max-width:1100px}.closing-rule{width:250px;height:4px;background:var(--blue);border-radius:3px}
+    #logo-lock>div:first-child{transform:scale(.55);transform-origin:center;width:420px!important;height:420px!important} #logo-lock{gap:90px!important}</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="114" data-width="1920" data-height="1080">
+      <section id="scene1" class="scene clip" data-start="0" data-duration="6.37" data-track-index="0">
+        <div class="scene-content hero">
+          <div class="hero-copy">
+            <div class="brand">LEDGERLY <b> - </b> AGENT BENCHMARK</div>
+            <div class="eyebrow">AI AGENTS &amp; INTELLIGENT SYSTEMS</div>
+            <h1>Can your agent<br><span style="color:var(--blue)">handle failure?</span></h1>
+            <p class="sub">Measure how AI agents behave - not just what a model answers.</p>
+            <div class="pill"><i class="dot"></i> Local benchmark  -  synthetic tasks  -  $0 API fees</div>
+          </div>
+          <div class="mascot-wrap"><div class="orbit"></div><div class="orbit two"></div><div class="mascot"><i class="eye"></i><i class="eye"></i></div><i class="star"></i></div>
+        </div>
+        <div class="foot"><span>LEDGERLY / AGENT BENCHMARK</span><span>01  -  INTRODUCTION</span></div>
+      </section>
+
+      <section id="scene2" class="scene clip" data-start="6.37" data-duration="9.38" data-track-index="1">
+        <div class="scene-content">
+          <div class="eyebrow">THE CHALLENGE</div><h2>Agent quality is more than a final answer.</h2>
+          <p class="sub">Agents reason in steps, call tools, encounter failures, and read untrusted instructions. They need the same task and a scorecard that captures the full run.</p>
+          <div class="problem-grid">
+            <article class="problem"><div class="num">01 / FAIRNESS</div><h3>Same work</h3><p>Identical facts, evidence, rules, and output contract for every candidate.</p></article>
+            <article class="problem"><div class="num">02 / BEHAVIOR</div><h3>More than success</h3><p>Track steps, tool calls, token use, time, and whether the task was completed.</p></article>
+            <article class="problem"><div class="num">03 / RELIABILITY</div><h3>Break the happy path</h3><p>Test outages, failing tools, and misleading instructions with repeat runs.</p></article>
+          </div>
+        </div>
+        <div class="foot"><span>THE PROBLEM STATEMENT</span><span>02  -  WHY BENCHMARK AGENTS</span></div>
+      </section>
+
+      <section id="scene3" class="scene clip" data-start="15.75" data-duration="11.49" data-track-index="2">
+        <div class="scene-content">
+          <div class="eyebrow">A FAIR COMPARISON CONTRACT</div><h2>One task. Three agent strategies.</h2>
+          <p class="sub">Each candidate uses the same local model settings and receives the same case facts, scoped evidence, decision rules, citation choices, and output schema. Expected outcomes are withheld until scoring.</p>
+          <div class="pipeline">
+            <div class="node primary"><strong>Scenario</strong><span>Frozen synthetic case</span></div><div class="connector" data-layout-allow-overflow><i></i></div>
+            <div class="node"><strong>Shared input</strong><span>Same evidence contract</span></div><div class="connector" data-layout-allow-overflow><i></i></div>
+            <div class="node primary"><strong>3 adapters</strong><span>Different agent paths</span></div><div class="connector" data-layout-allow-overflow><i></i></div>
+            <div class="node"><strong>Validator</strong><span>Scope + citations</span></div><div class="connector" data-layout-allow-overflow><i></i></div>
+            <div class="node primary"><strong>Trace</strong><span>Outcome + execution</span></div>
+          </div>
+          <div class="pill"><i class="dot"></i> Contract v3  -  qwen3:1.7b  -  Ollama local CPU</div>
+        </div>
+        <div class="foot"><span>IDENTICAL GENERATION SETTINGS</span><span>03  -  HOW IT WORKS</span></div>
+      </section>
+
+      <section id="scene4" class="scene clip" data-start="27.24" data-duration="8.8" data-track-index="3">
+        <div class="scene-content">
+          <div class="eyebrow">CORE RELIABILITY SUITE</div><h2>We test the cases where trust gets difficult.</h2>
+          <div class="scenario-grid">
+            <div class="scenario"><i class="check"></i><div><strong>Authorized evidence</strong><span>Can evidence support the billing condition?</span></div></div>
+            <div class="scenario"><i class="check"></i><div><strong>Missing acceptance</strong><span>Does the agent surface a real evidence gap?</span></div></div>
+            <div class="scenario"><i class="check"></i><div><strong>Wrong approver</strong><span>Can it reject unauthorized acceptance?</span></div></div>
+            <div class="scenario"><i class="check"></i><div><strong>Misleading source</strong><span>Can it ignore instruction-like content?</span></div></div>
+            <div class="scenario"><i class="check"></i><div><strong>Tool failure</strong><span>Can it recover from an injected call error?</span></div></div>
+            <div class="scenario"><i class="check"></i><div><strong>Model unavailable</strong><span>Does it fail explicitly without fallback?</span></div></div>
+          </div>
+          <p class="small">Synthetic invoice-evidence tasks  -  no customer data  -  no approval or email action</p>
+        </div>
+        <div class="foot"><span>SIX SCENARIOS  -  THREE REPEATS</span><span>04  -  RELIABILITY TESTS</span></div>
+      </section>
+
+      <section id="scene5" class="scene clip" data-start="36.04" data-duration="12.95" data-track-index="4">
+        <div class="scene-content">
+          <div class="eyebrow">CORRECTED THREE-REPEAT RUN</div><h2>On the same evidence tasks: 50% vs 0%.</h2>
+          <p class="sub">Four common evidence scenarios  -  three repeats per strategy. Same denominator for this comparison.</p>
+          <div class="results">
+            <div class="bars">
+              <div class="barrow"><strong>Tool agent</strong><div class="bartrack"><div id="bar1" class="barfill"></div></div><b class="pct" style="color:var(--blue)">6 / 12</b></div>
+              <div class="barrow"><strong>Direct single-pass</strong><div class="bartrack"><div id="bar2" class="barfill dim"></div></div><b class="pct" style="color:var(--muted)">0 / 12</b></div>
+              <div class="barrow"><strong>LangGraph.js</strong><div class="bartrack"><div id="bar3" class="barfill dim"></div></div><b class="pct" style="color:var(--muted)">0 / 12</b></div>
+            </div>
+            <aside class="stat-panel"><div class="bigstat">50%</div><div class="statlabel">tool-agent evidence pass rate</div><div class="stat-divider"></div><div style="font-size:23px;color:var(--white)">6 passes from 12 shared evidence attempts</div><p class="small">Both single-pass adapters: 0 of 12.</p></aside>
+          </div>
+          <p class="caveat">A narrow synthetic result, not a general reliability score. The 90% task-accuracy target is not met.</p>
+        </div>
+        <div class="foot"><span>RUN e3dd1e49  -  54 TOTAL ADAPTER ATTEMPTS</span><span>05  -  MEASURED RESULT</span></div>
+      </section>
+
+      <section id="scene6" class="scene clip" data-start="48.99" data-duration="13.83" data-track-index="5">
+        <div class="scene-content">
+          <div class="eyebrow">RELIABILITY CONTROLS</div><h2>Some controls passed. Important reasoning gaps remain.</h2>
+          <div class="resilience">
+            <article class="resultbox"><h3>Injected tool failure</h3><div class="score">3 / 3</div><p>Tool agent recovered in each repeat. Single-pass adapters report this tool-only fault as unsupported.</p><div class="tag">RECOVERY OBSERVED</div></article>
+            <article class="resultbox"><h3>Unavailable model</h3><div class="score">3 / 3 each</div><p>All three strategies surfaced the expected outage in each of three repeats. No silent fallback was used.</p><div class="tag">FAIL-CLOSED OUTCOME</div></article>
+            <article class="resultbox"><h3>Unauthorized approver</h3><div class="score bad">0 / 3</div><p>Tool agent failed to identify the wrong-authority case on every repeat.</p><div class="tag bad">NEEDS BETTER REASONING</div></article>
+            <article class="resultbox"><h3>Misleading instruction</h3><div class="score bad">0 / 3</div><p>Tool agent failed the source-instruction scenario on every repeat.</p><div class="tag bad">KEEP APPLICATION GUARDS</div></article>
+          </div>
+        </div>
+        <div class="foot"><span>VALID RUN  -  CORRECT DECISION</span><span>06  -  FAILURE BEHAVIOR</span></div>
+      </section>
+
+      <video id="live-site-demo" class="live-site-demo" data-start="62.82" data-duration="21.18" data-track-index="6" muted playsinline preload="auto" aria-label="Recorded Ledgerly website demo using the saved synthetic benchmark run">
+        <source src="assets/website-demo.mp4" type="video/mp4" />
+      </video>
+
+      <section id="scene8" class="scene clip" data-start="84" data-duration="13.41" data-track-index="7">
+        <div class="scene-content">
+          <div class="eyebrow">TRACEABLE MEASUREMENTS</div><h2>Every attempt leaves a useful record.</h2>
+          <div class="problem-grid">
+            <article class="problem"><div class="num">OUTCOME</div><h3>Task result</h3><p>Pass, incorrect, error, or unsupported.</p></article>
+            <article class="problem"><div class="num">EXECUTION</div><h3>Steps and tools</h3><p>Requests, tool calls, and event traces.</p></article>
+            <article class="problem"><div class="num">EFFICIENCY</div><h3>Tokens and time</h3><p>Prompt, output, and model timing.</p></article>
+          </div>
+          <p class="caveat">$0 paid API fees; hardware, electricity, and bandwidth are excluded.</p>
+        </div>
+        <div class="foot"><span>METRICS AND EXPANDABLE TRACE DETAILS</span><span>08 - SCORECARD</span></div>
+      </section>
+
+      <section id="scene9" class="scene clip" data-start="97.41" data-duration="8.73" data-track-index="8">
+        <div class="scene-content">
+          <div class="eyebrow">HONEST SCOPE</div><h2>What the prototype demonstrates - and what it does not.</h2>
+          <div class="limits">
+            <article class="limit"><h3 style="color:var(--teal)">Demonstrated</h3><ul><li>Shared inputs and output contract</li><li>Three strategies, including one LangGraph.js adapter</li><li>Three repeats and visible execution traces</li><li>Injected tool failure and model-outage controls</li></ul></article>
+            <article class="limit gap"><h3 style="color:#FF9EC0">Not established</h3><ul><li>High agent accuracy or production readiness</li><li>Broad framework interoperability</li><li>Real-customer reliability or financial outcomes</li><li>Stable speed ranking across different tasks</li></ul></article>
+          </div>
+          <p class="caveat">The strongest result today: a transparent benchmark that reveals where agents still fail.</p>
+        </div>
+        <div class="foot"><span>THREE REPEATS - SYNTHETIC TASKS - ONE LOCAL MODEL</span><span>09 - LIMITATIONS</span></div>
+      </section>
+
+      <section id="scene10" class="scene clip close" data-start="106.14" data-duration="7.7" data-track-index="10">
+        <div class="scene-content" style="align-items:center">
+          <div class="eyebrow">LEDGERLY AGENT BENCHMARK</div>
+          <h2>Same task.<br>Fair test.<br>Visible evidence.</h2>
+          <div class="closing-rule"></div>
+          <p class="sub">Next: improve evidence reasoning, add another independent adapter, and expand the evaluation.</p>
+          <div class="pill"><i class="dot"></i> Local  -  synthetic  -  $0 paid API fees</div>
+        </div>
+        <div class="foot"><span>AI AGENTS &amp; INTELLIGENT SYSTEMS</span><span>10 - END</span></div>
+      </section>
+      <div class="ambient-sweep" data-layout-ignore aria-hidden="true"></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      document.querySelectorAll('h1,h2').forEach(h=>{h.innerHTML=h.innerHTML.split(/(<[^>]+>)/).map(part=>part.startsWith('<')?part:part.split(/(\s+)/).map(w=>w.trim()?'<span class="kinetic" style="display:inline-block">'+w+'</span>':w).join('')).join('');});
+      const lock=document.createElement('div');lock.id='logo-lock';lock.style.cssText='position:absolute;inset:0;background:#20243d;display:flex;align-items:center;justify-content:center;gap:65px;opacity:0;z-index:100;font-size:100px;font-weight:800;color:white';lock.innerHTML='<div style="position:relative;width:260px;height:260px;display:grid;place-items:center">'+document.querySelector('.mascot-wrap').innerHTML+'</div><div>Ledgerly<div style="font-size:22px;letter-spacing:8px;color:#969cff;margin-top:20px">AGENT BENCHMARK</div></div>';document.querySelector('#root').append(lock);
+      const scenes = [...document.querySelectorAll('.scene, #live-site-demo')];
+      scenes.forEach((scene) => {
+        const start = Number(scene.dataset.start);
+        tl.fromTo(scene, { opacity: 0, x: 70, clipPath:'inset(0 100% 0 0)' }, { opacity: 1, x: 0, clipPath:'inset(0 0% 0 0)', duration: .6, ease: 'power3.inOut' }, start);
+        const words=scene.querySelectorAll('.kinetic');if(words.length)tl.fromTo(words,{y:55,opacity:0,rotation:3},{y:0,opacity:1,rotation:0,duration:.5,stagger:.055,ease:'power3.out'},start+.15);
+        const content = scene.querySelectorAll('.eyebrow, h1, h2, .sub, .problem, .node, .scenario, .resultbox, .metric, .limit, .stat-panel, .pill, .screenframe, .foot');
+        if (content.length) tl.fromTo(content,
+          { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .42, stagger: .075, ease: 'power2.out' }, start + .06);
+      });
+      tl.to('.orbit', { rotation: 360, transformOrigin: '50% 50%', duration: 8, repeat: 12, ease: 'none' }, 0);
+      tl.to('.orbit.two', { rotation: -360, transformOrigin: '50% 50%', duration: 11, repeat: 8, ease: 'none' }, 0);
+      tl.to('.ambient-sweep', { x: 2130, duration: 3, repeat: 37, ease: 'none' }, 0);
+      tl.to('.star', { x: -470, y: 130, opacity: .15, duration: 1.7, repeat: 4, yoyo: true, ease: 'power1.inOut' }, 1.1);
+      document.querySelectorAll('.connector i').forEach((dot, i) => tl.fromTo(dot, { x: 0 }, { x: 52, duration: .8, ease: 'power2.inOut', immediateRender: i === 0 }, [16.25,17.95,19.65,21.35][i]));
+      tl.to('#bar1', { width: '50%', duration: .95, ease: 'power2.out' }, 40.24);
+      tl.fromTo('.bigstat', { scale: .85, opacity: .5 }, { scale: 1, opacity: 1, duration: .7, ease: 'back.out(1.7)' }, 41.34);
+      tl.to('.check', { scale: 1.08, duration: .25, yoyo: true, repeat: 1, stagger: .12, ease: 'power1.inOut' }, 27.44);
+      tl.to('.closing-rule', { scaleX: 1.45, transformOrigin: 'center', duration: .65, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 109.14);
+      tl.set('#logo-lock',{opacity:1},113);
+      tl.set('#logo-lock *',{animation:'none'},113);
+      tl.to({}, {duration:1},113);
+      window.__timelines.main = tl;
+      window.__videoDuration = 114;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
+

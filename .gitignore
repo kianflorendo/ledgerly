@@ -1,0 +1,19 @@
+node_modules/
+dist/
+data/
+.env
+.env.*
+!.env.example
+*.sqlite*
+*.log
+test-results/
+playwright-report/
+
+# Local capture and rendering intermediates
+/browser-*.png
+/submission/motion-silent.mp4
+/submission/video-demo/artifacts/
+/submission/video-demo/assets/voice-parts/
+/submission/video-demo/assets/narration-rate2.wav
+/submission/video-demo/*preview*.png
+/submission/video-demo/*preview*.jpg
