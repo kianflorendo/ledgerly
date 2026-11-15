@@ -14,7 +14,7 @@
       *{box-sizing:border-box}html,body{width:1920px;height:1080px;margin:0;overflow:hidden;background:var(--bg);font-family:var(--font);color:var(--white)}
       body{position:relative}#root{position:relative;width:100%;height:100%;overflow:hidden;background:var(--bg)}
       #root:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(75,94,141,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(75,94,141,.13) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,transparent,#000 45%,#000)}
-      .scene{position:absolute;inset:0;padding:74px 118px 78px;display:flex;flex-direction:column;opacity:0;transform:translateY(18px);background:var(--bg);overflow:hidden}
+      .scene{position:absolute;inset:0;padding:74px 118px 78px;display:flex;flex-direction:column;opacity:0;background:var(--bg);overflow:hidden}
       .scene:after{content:"";position:absolute;z-index:0;right:-230px;top:-350px;width:850px;height:850px;border-radius:50%;background:radial-gradient(circle,rgba(65,138,242,.10),transparent 70%);pointer-events:none}
       .scene-content{position:relative;z-index:1;display:flex;flex-direction:column;width:100%;height:100%;gap:28px;justify-content:center}
       .eyebrow{font-size:20px;letter-spacing:.19em;text-transform:uppercase;color:var(--teal);font-weight:700}
@@ -38,7 +38,11 @@
       .limits{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:14px}.limit{padding:28px 32px;border-radius:22px;background:var(--panel);border:1px solid var(--line)}.limit h3{font-size:30px;margin:0 0 22px}.limit ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:16px}.limit li{font-size:23px;color:var(--muted);line-height:1.3;padding-left:26px;position:relative}.limit li:before{content:"";position:absolute;left:0;top:9px;width:10px;height:10px;border-radius:50%;background:var(--teal)}.limit.gap li:before{background:var(--rose)}
       .scene.live{padding:0;background:#11182C}.live-site-demo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#11182C}
       .close{align-items:center;text-align:center}.close h2{font-size:72px;max-width:1300px}.close .sub{max-width:1100px}.closing-rule{width:250px;height:4px;background:var(--blue);border-radius:3px}
-    #logo-lock>div:first-child{transform:scale(.55);transform-origin:center;width:420px!important;height:420px!important} #logo-lock{gap:90px!important}</style>
+    #logo-lock>div:first-child{transform:scale(.55);transform-origin:center;width:420px!important;height:420px!important} #logo-lock{gap:90px!important}#demo-camera{position:absolute;inset:0;transform-origin:50% 50%;overflow:hidden}
+      .score,.pct,.bigstat{font-variant-numeric:tabular-nums}
+      #film-progress{position:absolute;bottom:0;left:0;height:4px;width:100%;background:#6D6FFF;transform-origin:left;z-index:40}
+      #demo-label{position:absolute;left:60px;bottom:45px;border:1px solid #6D6FFF;background:#1E243B;padding:16px 24px;border-radius:12px;color:#F4F6FC;font-size:22px;z-index:35;opacity:0}
+      </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="114" data-width="1920" data-height="1080">
@@ -131,9 +135,9 @@
         <div class="foot"><span>VALID RUN  -  CORRECT DECISION</span><span>06  -  FAILURE BEHAVIOR</span></div>
       </section>
 
-      <video id="live-site-demo" class="live-site-demo" data-start="62.82" data-duration="21.18" data-track-index="6" muted playsinline preload="auto" aria-label="Recorded Ledgerly website demo using the saved synthetic benchmark run">
+      <div id="demo-camera"><video id="live-site-demo" class="live-site-demo" data-start="62.82" data-duration="21.18" data-track-index="6" muted playsinline preload="auto" aria-label="Recorded Ledgerly website demo using the saved synthetic benchmark run">
         <source src="assets/website-demo.mp4" type="video/mp4" />
-      </video>
+      </video></div>
 
       <section id="scene8" class="scene clip" data-start="84" data-duration="13.41" data-track-index="7">
         <div class="scene-content">
@@ -170,7 +174,7 @@
         </div>
         <div class="foot"><span>AI AGENTS &amp; INTELLIGENT SYSTEMS</span><span>10 - END</span></div>
       </section>
-      <div class="ambient-sweep" data-layout-ignore aria-hidden="true"></div>
+      <div id="film-progress" data-layout-ignore></div><div id="demo-label">RECORDED WORKSPACE ? SYNTHETIC BENCHMARK</div><div class="ambient-sweep" data-layout-ignore aria-hidden="true"></div>
     </div>
     <script>
       window.__timelines = window.__timelines || {};
@@ -186,18 +190,26 @@
         if (content.length) tl.fromTo(content,
           { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .42, stagger: .075, ease: 'power2.out' }, start + .06);
       });
-      tl.to('.orbit', { rotation: 360, transformOrigin: '50% 50%', duration: 8, repeat: 12, ease: 'none' }, 0);
-      tl.to('.orbit.two', { rotation: -360, transformOrigin: '50% 50%', duration: 11, repeat: 8, ease: 'none' }, 0);
+      tl.to('#scene1 .orbit', { rotation: 360, transformOrigin: '50% 50%', duration: 8, repeat: 12, ease: 'none' }, 0);
+      tl.to('#scene1 .orbit.two', { rotation: -360, transformOrigin: '50% 50%', duration: 11, repeat: 8, ease: 'none' }, 0);
       tl.to('.ambient-sweep', { x: 2130, duration: 3, repeat: 37, ease: 'none' }, 0);
-      tl.to('.star', { x: -470, y: 130, opacity: .15, duration: 1.7, repeat: 4, yoyo: true, ease: 'power1.inOut' }, 1.1);
+      tl.to('#scene1 .star', { x: -470, y: 130, opacity: .15, duration: 1.7, repeat: 4, yoyo: true, ease: 'power1.inOut' }, 1.1);
       document.querySelectorAll('.connector i').forEach((dot, i) => tl.fromTo(dot, { x: 0 }, { x: 52, duration: .8, ease: 'power2.inOut', immediateRender: i === 0 }, [16.25,17.95,19.65,21.35][i]));
       tl.to('#bar1', { width: '50%', duration: .95, ease: 'power2.out' }, 40.24);
       tl.fromTo('.bigstat', { scale: .85, opacity: .5 }, { scale: 1, opacity: 1, duration: .7, ease: 'back.out(1.7)' }, 41.34);
       tl.to('.check', { scale: 1.08, duration: .25, yoyo: true, repeat: 1, stagger: .12, ease: 'power1.inOut' }, 27.44);
       tl.to('.closing-rule', { scaleX: 1.45, transformOrigin: 'center', duration: .65, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 109.14);
-      tl.set('#logo-lock',{opacity:1},113);
-      tl.set('#logo-lock *',{animation:'none'},113);
-      tl.to({}, {duration:1},113);
+      tl.fromTo('#logo-lock',{opacity:0,y:30},{opacity:1,y:0,duration:.7,ease:'power2.out'},112.3);
+      
+      tl.fromTo('#film-progress',{scaleX:0},{scaleX:1,duration:113,ease:'none'},0);
+      tl.fromTo('#demo-label',{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease:'power2.out'},63.4);
+      tl.set('#demo-label',{opacity:0},84);
+      tl.to('#demo-camera',{scale:1.14,x:-110,y:-70,duration:2,ease:'power2.inOut'},64);
+      tl.to('#demo-camera',{scale:1.22,x:-150,y:-140,duration:2,ease:'sine.inOut'},70);
+      tl.to('#demo-camera',{scale:1,x:0,y:0,duration:1.7,ease:'power3.inOut'},77.5);
+      document.querySelectorAll('.scene-content').forEach(el=>{const parent=el.closest('.scene');const start=Number(parent.dataset.start);const span=Number(parent.dataset.duration);tl.fromTo(el,{scale:.98},{scale:1,duration:Math.max(2,span-.8),ease:'sine.out'},start+.7)});
+      tl.fromTo('#scene1 .mascot-wrap',{scale:.72,rotation:-8,opacity:0},{scale:1,rotation:0,opacity:1,duration:1.1,ease:'back.out(1.2)'},.25);
+      document.querySelectorAll('.resultbox').forEach((el,i)=>tl.to(el,{borderColor:i<2?'#19CEB3':'#FF9EC0',duration:.7,ease:'sine.inOut'},51+i*2));
       window.__timelines.main = tl;
       window.__videoDuration = 114;
       tl.seek(0);

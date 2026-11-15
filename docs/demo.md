@@ -3,7 +3,7 @@
 ## Prepared demo assets (2026-11-10)
 
 - PowerPoint: [ledgerly-agent-benchmark-demo.pptx](../submission/ledgerly-agent-benchmark-demo.pptx), with a matching [three-minute talk track](../submission/talk-track.md).
-- Video: [ledgerly-agent-benchmark-video.mp4](../submission/ledgerly-agent-benchmark-video.mp4), 114 seconds, 1920x1080 at 15 fps, with offline Microsoft Zira narration and recorded local website footage. It shows the saved synthetic three-repeat run and invoice-resolution desk; recording did not start another benchmark. The [voice-over script](../submission/video-demo/voiceover-script.md) and editable [HyperFrames source](../submission/video-demo/) are included.
+- Video: [ledgerly-agent-benchmark-video.mp4](../submission/ledgerly-agent-benchmark-video.mp4), 114 seconds, 1920x1080 at 30 fps, with offline Microsoft Zira narration and recorded local website footage. It shows the saved synthetic three-repeat run and invoice-resolution desk; recording did not start another benchmark. The [voice-over script](../submission/video-demo/voiceover-script.md) and editable [HyperFrames source](../submission/video-demo/) are included.
 - Editable HyperFrames composition: [video-demo](../submission/video-demo/).
 - The MP4 playback and dimensions were checked locally. No external video URL has been created; upload the MP4 to the platform of your choice if a share link is required.
 
@@ -34,7 +34,7 @@ Do not expose credentials or unrelated customer data while presenting.
 - [ ] Setup, model download and reset commands verified.
 - [ ] Two complete cases and negative-case results included.
 - [ ] Hardware/model configuration and limitations disclosed.
-- [x] Narrated website video exported; 1920x1080 at 15 fps, 114 seconds, H.264 video plus AAC narration. Playback, audio stream and volume were checked locally.
+- [x] Narrated website video exported; 1920x1080 at 30 fps, 114 seconds, H.264 video plus AAC narration. Playback, audio stream and volume were checked locally.
 - [ ] Three consecutive rehearsals pass.
 - [ ] Repository/video/PPT access checked before submission.
 

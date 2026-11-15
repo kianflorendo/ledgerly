@@ -1,6 +1,6 @@
 Ledgerly Agent Benchmark - demo package
 
-Video: ledgerly-agent-benchmark-video.mp4 (114 seconds, 1920x1080, 15 fps) with offline Microsoft Zira narration and recorded footage of the local website. The browser footage shows the saved synthetic three-repeat run and invoice-resolution desk; no benchmark was started during recording. Narration: video-demo/voiceover-script.md.
+Video: ledgerly-agent-benchmark-video.mp4 (114 seconds, 1920x1080, 30 fps) with offline Microsoft Zira narration and recorded footage of the local website. The browser footage shows the saved synthetic three-repeat run and invoice-resolution desk; no benchmark was started during recording. Narration: video-demo/voiceover-script.md.
 
 PowerPoint: ledgerly-agent-benchmark-demo.pptx. Use talk-track.md for the three-minute presentation script and benchmark caveats.
 
